@@ -71,7 +71,7 @@ TEST_CASE("Invalid operations")
         {1, 0, 0, 1, 0}};
     g5.loadGraph(graph2);
     CHECK_THROWS(g5 * g1);
-    CHECK_THROWS(g2 * g1);
+    CHECK_THROWS(g1 * g2);
 
     // Addition of two graphs with different dimensions
     ariel::Graph g6;
@@ -83,4 +83,90 @@ TEST_CASE("Invalid operations")
         {1, 0, 0, 1, 0}};
     g6.loadGraph(graph3);
     CHECK_THROWS(g1 + g6);
+}
+TEST_CASE("Equality")
+{
+    ariel::Graph g1;
+    ariel::Graph g2;
+    vector<vector<int>> graph = {
+        {0, 1, 0},
+        {1, 0, 1},
+        {0, 1, 0}};
+    g1.loadGraph(graph);
+    g2.loadGraph(graph);
+
+    CHECK(g1==g2);
+
+    vector<vector<int>> graph2= {
+        {0, 1, 1},
+        {1, 0, 1},
+        {1, 1, 0}};
+    g2.loadGraph(graph2);
+
+    CHECK(g1!=g2);
+}
+TEST_CASE("Much Bigger/Much Smaller")
+{
+    ariel::Graph g1;
+    vector<vector<int>> graph = {
+        {0, 1, 0},
+        {1, 0, 1},
+        {0, 1, 0}};
+    g1.loadGraph(graph);
+
+    ariel::Graph g2;
+    vector<vector<int>> graph2= {
+        {0, 1, 1},
+        {1, 0, 1},
+        {1, 1, 0}};
+    g2.loadGraph(graph2);
+
+    CHECK(g1<g2);
+    CHECK(g2>g1);
+}
+TEST_CASE("Bigger equal to/Smaller equal to")
+{
+    ariel::Graph g1;
+    ariel::Graph g2;
+    vector<vector<int>> graph = {
+        {0, 1, 0},
+        {1, 0, 1},
+        {0, 1, 0}};
+    g1.loadGraph(graph);
+    g2.loadGraph(graph);
+
+    CHECK(g1<=g2);
+    CHECK(g2>=g1);
+
+
+    vector<vector<int>> graph2= {
+        {0, 1, 1},
+        {1, 0, 1},
+        {1, 1, 0}};
+    g2.loadGraph(graph2);
+
+    CHECK(g1<=g2);
+    CHECK(g2>=g1);
+}
+TEST_CASE("Almost the same")
+{
+    ariel::Graph g1;
+    vector<vector<int>> graph = {
+    {0, 5, 4, 0}, 
+    {5, 0, 0, 1}, 
+    {4, 0, 0, 1}, 
+    {0, 1, 1, 0}};
+    g1.loadGraph(graph);
+
+    ariel::Graph g2;
+    vector<vector<int>> graph2= {
+    {0, 1, 1, 0}, 
+    {1, 0, 0, 3}, 
+    {1, 0, 0, 6}, 
+    {0, 3, 6, 0}};
+    g2.loadGraph(graph2);
+
+    CHECK(g1>g2);
+    CHECK(g2>g1);
+    CHECK(g1!=g2);
 }

@@ -69,7 +69,7 @@
 
     ariel::Graph& ariel::Graph::operator+(const ariel::Graph &other) const
     {
-        if(this->adjacencyMatrix[0].size() != other.getAdjacencyMatrix().size())
+        if(this->adjacencyMatrix.size() != other.getAdjacencyMatrix().size() || this->adjacencyMatrix[0].size() != other.getAdjacencyMatrix()[0].size())
         {
             throw std::invalid_argument("The number of columns in the first matrix must be equal to the number of rows in the second matrix.");
         }
@@ -186,7 +186,7 @@
 
     ariel::Graph& ariel::Graph::operator*(const ariel::Graph &other) const
     {
-        if(this->adjacencyMatrix[0].size() != other.getAdjacencyMatrix().size())
+        if(this->adjacencyMatrix[0].size() != other.getAdjacencyMatrix().size() || this->adjacencyMatrix.size() != other.getAdjacencyMatrix()[0].size())
         {
             throw std::invalid_argument("The number of columns in the first matrix must be equal to the number of rows in the second matrix.");
         }
@@ -223,4 +223,127 @@
     void ariel::Graph::operator/=(float s)
     {
         *this = *this * (1/s);
+    }
+
+    bool ariel::Graph::operator>(const ariel::Graph &other) const
+    {
+        if(this->adjacencyMatrix[0].size() != other.getAdjacencyMatrix().size() || this->adjacencyMatrix.size() != other.getAdjacencyMatrix()[0].size())
+        {
+            throw std::invalid_argument("The number of columns in the first matrix must be equal to the number of rows in the second matrix.");
+        }
+
+        int myScore = 0, otherScore = 0, myEdgeCounter = 0, otherEdgeCounter = 0, vertexCount = 0, myWeight = 0, otherWeight = 0;
+        std::vector<std::vector<int>> otherMat = other.getAdjacencyMatrix();
+        vertexCount = std::min(this->adjacencyMatrix.size(),other.getAdjacencyMatrix().size());
+
+        bool canContain = true;
+
+        for(unsigned int i = 0;i<this->adjacencyMatrix.size();i++)
+        {
+            for(unsigned int j = 0;j<this->adjacencyMatrix.size();j++)
+            {
+                this->adjacencyMatrix[i][j]!=0?myEdgeCounter++:myEdgeCounter;
+                myWeight += this->adjacencyMatrix[i][j];
+            }
+        }
+        
+        for(unsigned int i = 0;i<otherMat.size();i++)
+        {
+            for(unsigned int j = 0;j<otherMat.size();j++)
+            {
+                otherMat[i][j]!=0?otherEdgeCounter++:otherEdgeCounter;
+                otherWeight += otherMat[i][j];
+            }
+        }
+
+        for(unsigned int i = 0;i<vertexCount;i++)
+        {
+            for(unsigned int j = 0;j<vertexCount;j++)
+            {
+                if(this->adjacencyMatrix[i][j] != 0 && otherMat[i][j] == 0)
+                {
+                    myScore++;
+                }
+                else if(this->adjacencyMatrix[i][j] == 0 && otherMat[i][j] != 0)
+                {
+                    otherScore++;
+                }
+                else if(this->adjacencyMatrix[i][j] != 0 && otherMat[i][j] != 0 && this->adjacencyMatrix[i][j] != otherMat[i][j])
+                {
+                    canContain = false;
+                }
+            }
+        }
+        if(canContain)
+        {
+            if(myScore == 0 && otherScore == 0)
+            {
+                if (this->adjacencyMatrix.size()>other.getAdjacencyMatrix().size())
+                {
+                    return true;
+                }
+                else if (this->adjacencyMatrix.size()<=other.getAdjacencyMatrix().size())
+                {
+                    return false;
+                }
+            }
+            if(myScore != 0 && otherScore == 0)
+            {
+                return true;
+            }
+            
+            if(myScore == 0 & otherScore != 0)
+            {
+                return myEdgeCounter>otherEdgeCounter;
+            }
+        }
+        else if(myScore!=0 && otherScore!=0)
+        {
+            if(myEdgeCounter>otherEdgeCounter)
+            {
+                return true;
+            }
+            else if (myEdgeCounter<otherEdgeCounter)
+            {
+                return false;
+            }
+            else if (this->adjacencyMatrix.size()>other.getAdjacencyMatrix().size())
+            {
+                return true;
+            }
+            else if (this->adjacencyMatrix.size()<other.getAdjacencyMatrix().size())
+            {
+                return false;
+            }
+            else
+            {
+                return myWeight>=otherWeight;
+            }
+        }
+        return true;
+    }
+
+    bool ariel::Graph::operator<(const ariel::Graph &other) const
+    {
+        return (other>*this);
+    }
+
+    bool ariel::Graph::operator==(const ariel::Graph &other) const
+    {
+        return !(*this>other) && !(other>*this);
+    }
+    
+    bool ariel::Graph::operator!=(const ariel::Graph &other) const
+    {
+        return !(*this==other);
+    }
+
+    bool ariel::Graph::operator>=(const ariel::Graph &other) const
+    {
+        return (*this>other) || (*this==other);
+    }
+
+    bool ariel::Graph::operator<=(const ariel::Graph &other) const
+    {
+        return (*this<other) || (*this==other);
     }

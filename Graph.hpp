@@ -56,6 +56,19 @@ namespace ariel{
             void operator/=(float s);
 
 
+            bool operator>(const Graph &other) const;
+
+            bool operator<(const Graph &other) const;
+
+            bool operator==(const Graph &other) const;
+
+            bool operator!=(const Graph &other) const;
+
+            bool operator>=(const Graph &other) const;
+
+            bool operator<=(const Graph &other) const;
+
+
     };
     std::ostream& operator<<(std::ostream& os, const Graph& obj); 
 };
