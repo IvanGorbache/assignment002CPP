@@ -4,7 +4,7 @@
         if(g.size()!=g[0].size())
         {
             //throwing back an exception in case that the number of rows and columns differ from each other.
-            throw std::invalid_argument("The number of rows and columbs are differnet!");
+            //throw std::invalid_argument("The number of rows and columbs are differnet!");
         }
         //Loards the new matrix
         this->adjacencyMatrix = g;
@@ -54,7 +54,7 @@
             output+="]";
             if(j<vertexCount)
             {
-                output+=",";
+                output+="\n";
             }
             j++;
         }
@@ -67,9 +67,9 @@
         return os;
     }
 
-    ariel::Graph& ariel::Graph::operator+(const ariel::Graph other)
+    ariel::Graph& ariel::Graph::operator+(const ariel::Graph &other) const
     {
-        if(this->adjacencyMatrix.size() != other.getAdjacencyMatrix().size())
+        if(this->adjacencyMatrix[0].size() != other.getAdjacencyMatrix().size())
         {
             throw std::invalid_argument("The number of columns in the first matrix must be equal to the number of rows in the second matrix.");
         }
@@ -88,4 +88,139 @@
         return result;
     }
 
+    ariel::Graph& ariel::Graph::operator++(int a)
+    {
+        for(unsigned int i = 0;i<this->adjacencyMatrix.size();i++)
+        {
+            for(unsigned int j = 0;j<this->adjacencyMatrix.size();j++)
+            {
+                this->adjacencyMatrix[i][j]++;
+            }
+        }
+        return *this;
+    }
 
+    ariel::Graph& ariel::Graph::operator++()
+    {
+        for(unsigned int i = 0;i<this->adjacencyMatrix.size();i++)
+        {
+            for(unsigned int j = 0;j<this->adjacencyMatrix.size();j++)
+            {
+                ++this->adjacencyMatrix[i][j];
+            }
+        }
+        return *this;
+    }
+
+    ariel::Graph& ariel::Graph::operator--(int a)
+    {
+        for(unsigned int i = 0;i<this->adjacencyMatrix.size();i++)
+        {
+            for(unsigned int j = 0;j<this->adjacencyMatrix.size();j++)
+            {
+                this->adjacencyMatrix[i][j]--;
+            }
+        }
+        return *this;
+    }
+
+    ariel::Graph& ariel::Graph::operator--()
+    {
+        for(unsigned int i = 0;i<this->adjacencyMatrix.size();i++)
+        {
+            for(unsigned int j = 0;j<this->adjacencyMatrix.size();j++)
+            {
+                --this->adjacencyMatrix[i][j];
+            }
+        }
+        return *this;
+    }
+
+    void ariel::Graph::operator+=(const ariel::Graph &other)
+    {
+        *this = *this + other;
+    }
+    
+    ariel::Graph ariel::Graph::operator+() const
+    {
+        return *this;
+    }
+
+    ariel::Graph& ariel::Graph::operator-() const
+    {
+        return *this * -1;
+    }
+
+    ariel::Graph& ariel::Graph::operator-(const ariel::Graph &other) const
+    {
+        return *this + (-other);
+    }
+
+    void ariel::Graph::operator-=(const ariel::Graph &other)
+    {
+        *this += -other;
+    }
+
+    ariel::Graph& ariel::Graph::operator*(float s) const
+    {
+        static ariel::Graph result;
+        std::vector<std::vector<int>> resultMat = this->adjacencyMatrix;
+
+        for(unsigned int i = 0;i<this->adjacencyMatrix.size();i++)
+        {
+            for(unsigned int j = 0;j<this->adjacencyMatrix.size();j++)
+            {
+                resultMat[i][j]*=s;
+            }
+        }
+        result.loadGraph(resultMat);
+
+        return result;
+    }
+
+    void ariel::Graph::operator*=(float s)
+    {
+        *this = *this * s;
+    }
+
+
+    ariel::Graph& ariel::Graph::operator*(const ariel::Graph &other) const
+    {
+        if(this->adjacencyMatrix[0].size() != other.getAdjacencyMatrix().size())
+        {
+            throw std::invalid_argument("The number of columns in the first matrix must be equal to the number of rows in the second matrix.");
+        }
+        static ariel::Graph result;
+        std::vector<std::vector<int>> otherMat = other.getAdjacencyMatrix(), 
+        resultMat(this->adjacencyMatrix.size(),std::vector<int>(otherMat[0].size(),0));
+
+        for(unsigned int i = 0;i<this->adjacencyMatrix.size();i++)
+        {
+            for(unsigned int j = 0;j<otherMat[0].size();j++)
+            {
+                for(unsigned int k = 0;k<this->adjacencyMatrix[0].size();k++)
+                {
+                    resultMat[i][j] += this->adjacencyMatrix[i][k] * otherMat[k][j];
+                }
+            }
+        }
+        result.loadGraph(resultMat);
+
+        return result;
+    }
+
+    void ariel::Graph::operator*=(const ariel::Graph &other)
+    {
+        *this = *this * other;
+    }
+
+
+    ariel::Graph& ariel::Graph::operator/(float s) const
+    {
+        return *this * (1/s);
+    }
+
+    void ariel::Graph::operator/=(float s)
+    {
+        *this = *this * (1/s);
+    }

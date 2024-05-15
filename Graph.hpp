@@ -20,14 +20,42 @@ namespace ariel{
 
             std::string printGraph() const;
 
-            Graph& operator+(const Graph other);
+            Graph& operator+(const Graph &other) const;
 
+            Graph operator+() const;
+
+            Graph& operator++(int a);
             
+            Graph& operator++();
+
+            void operator+=(const Graph &other);
+
+
+            Graph& operator-(const ariel::Graph &other) const;
+
+            Graph& operator-() const; 
+
+            void operator-=(const Graph &other); 
+
+            Graph& operator--(int a);  
+
+            Graph& operator--(); 
+
+
+            Graph& operator*(float s) const;
+
+            void operator*=(float s);
+
+            Graph& operator*(const Graph &other) const;
+
+            void operator*=(const Graph &other);
+
+
+            Graph& operator/(float s) const;
+
+            void operator/=(float s);
+
+
     };
-    
-
-
-    std::ostream& operator<<(std::ostream& os, const Graph& obj);
-
-    
+    std::ostream& operator<<(std::ostream& os, const Graph& obj); 
 };
