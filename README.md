@@ -1,43 +1,51 @@
-# CPP Assignment 001 / Namespaces and classes
+# CPP Assignment 002 / Operator Overloading
 
 0) Namespace ariel:
 
 0-0)class Graph:
 
-    private:
+    printGraph() A function that returns a string representation of the adjacency matrix.
 
-        adjacencyMatrix - A 2D vector of integers which represents the adjacency matrix of a graph.
+    operator+ An overloading of the + operator that adds up two given matrices and returns a new matrix.
 
-    public:
+    operator+ An overloading the unary + operator that returns the matrix as is.
 
-        loadGraph - A function used to load a 2D vector into the adjacency matrix of the graph.
+    Graph& operator++ An overloaing of the ++ operator that increments all cells where i!=j.
+    
+    Graph& operator++ An overloading of the pre increment operator that calls the increment operator.
 
-        printGraph- A function the prints out the number of vertecies and edges in the graph according to the adjacency matrix of the graph.
+    void operator+= An overloading of the += operator that adds the value of another same size matrix to our matrix
 
-        getAdjacencyMatrix- A function that returns the adjacency matrix of the graph.
+    operator- An overloading of the + operator that subtracts two given matrices and returns a new matrix.
 
-0-1)class Algorithms: 
+    operator- An overloading the unary - operator that returns the matrix multiplied by -1
 
-    public:
+    operator-= An overloading of the -= operator that subtracts the value of another same size matrix to our matrix
 
-        isConnected- A function that checks if the graph is connected by running the BFS algorithm starting from vertex 0 and then checking if all the vertecies have been painted black (visited).
+    operator-- An overloaing of the -- operator that decrement all cells where i!=j.
 
-        shortestPath- A function that searches for the shortest path between two vertecies using the bellman ford algorithm function or detects a possible negative cycle. Please note that if the function is set to search for a shortest path, it will return the shortest path even if a negative cycle is present if the shortest path doesn't visit any of the vertecies marked as a part of the negative cycle 
+    operator-- An overloading of the pre decrement -- operator that calls the decrement operator.
 
-        isContainsCycle- A function that searches for the a cycle using the DFS algorithm to detect a back edge (If the vertex V is already gray when we first visit the vertex U, then uv is a back edge) which can determine if a graph contains a cycle
+    operator* An overloaing of the * operator that multiplies the given matrix by a float scalar and returns a new matrix.
 
-        isBipartite- A function that return the partition of the vertecies into two disjoint and independent sets if such a partition exists by using a modified version of the DFS algorithm that colors the neighboring vertecies in the opposite color of the current vertex if all of them are white (gray -> black, black -> gray). If a one of the neighboring vertecies has the same color, then there is no partition and it sends 0. If we don't run into such a situation, we return the partition according to the coloring
+    operator*= An overloaing of the * operator that multiplies the given matrix by a float scalar.
 
-        negativeCycle- A function that takes the graph and creates a new graph with it that contains a new vertex that is connected to all vertecies with a weight of 1 on all edges to make the graph connected so that we can detect a negative cycle even if it's disjointed. Then the function calls the bellman ford function to detect a negtive cycle.
+    operator* An overloading of the * operator that multiplies two given matrices and returns a new matrix only and only if the new matrix is square
 
-    private:
+    operator*= An overloading of the *= operator that multiplies two given matrices and assigns it to us only and only if the new matrix is square 
 
-        colorDFS- A function used to return the partition of the vertecies into two disjoint and independent sets if such a partition exists by using a modified version of the DFS algorithm that colors the neighboring vertecies in the opposite color of the current vertex if all of them are white (gray -> black, black -> gray). If a one of the neighboring vertecies has the same color, then there is no partition and it sends 0. If we don't run into such a situation, we return the partition according to the coloring
-        
-        visitDFS- A function used to visit the vertecies using the DFS algorithm to detect a back edge to check if the graph contains a cycle. 
+    operator/ An overloaing of the / operator that divides the given matrix by a float scalar and returns a new matrix.
 
-        visitBFS- A function used to visit the vertecies of the graph using the BFS algorithm to check if the graph is connected.
+    operator/= An overloaing of the /= operator that divides the given matrix by a float scalar.
 
-        relaxVert- A function used in the bellman ford algorithm to relax an edge.
-        
-        bellmanFord- A function that can be used to either find the shortest path from one vertex to all the other vertecies or to detect a negative cycle
+    operator> An operator that checks if a given graph is much larger than the other graph if it contains it if the original graph contains all the same edges and has more edges/vertecies
+
+    operator< simply turns a<b into b>a && a!=b
+
+    operator== checks if !(a>b) && !(b>a)
+
+    operator!= checks !(a==b)
+
+    operator>= checks a>b || a== b
+
+    operator<= checks a<b || a== b
