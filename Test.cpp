@@ -137,6 +137,7 @@ TEST_CASE("Bigger equal to/Smaller equal to")
 
     CHECK(g1<=g2);
     CHECK(g2>=g1);
+    CHECK(g2==g1);
 
 
     vector<vector<int>> graph2= {
@@ -147,6 +148,7 @@ TEST_CASE("Bigger equal to/Smaller equal to")
 
     CHECK(g1<=g2);
     CHECK(g2>=g1);
+    CHECK(g2!=g1);
 }
 TEST_CASE("Almost the same")
 {
@@ -168,5 +170,8 @@ TEST_CASE("Almost the same")
 
     CHECK(g1>g2);
     CHECK(g2>g1);
+    CHECK(g1<g2);
+    CHECK(g2<g1);
+    CHECK((g1 == g2) == false);
     CHECK(g1!=g2);
 }

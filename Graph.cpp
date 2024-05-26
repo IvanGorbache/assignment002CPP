@@ -271,6 +271,7 @@
                 else if(this->adjacencyMatrix[i][j] != 0 && otherMat[i][j] != 0 && this->adjacencyMatrix[i][j] != otherMat[i][j])
                 {
                     canContain = false;
+                    break;
                 }
             }
         }
@@ -325,7 +326,7 @@
 
     bool ariel::Graph::operator<(const ariel::Graph &other) const
     {
-        return (other>*this);
+        return (other>*this) && (other!=*this);
     }
 
     bool ariel::Graph::operator==(const ariel::Graph &other) const
