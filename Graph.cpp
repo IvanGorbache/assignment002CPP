@@ -94,7 +94,10 @@
         {
             for(unsigned int j = 0;j<this->adjacencyMatrix.size();j++)
             {
-                this->adjacencyMatrix[i][j]++;
+                if(i!=j)
+                {
+                    this->adjacencyMatrix[i][j]++;
+                }
             }
         }
         return *this;
@@ -102,14 +105,7 @@
 
     ariel::Graph& ariel::Graph::operator++()
     {
-        for(unsigned int i = 0;i<this->adjacencyMatrix.size();i++)
-        {
-            for(unsigned int j = 0;j<this->adjacencyMatrix.size();j++)
-            {
-                ++this->adjacencyMatrix[i][j];
-            }
-        }
-        return *this;
+        return (*this)++;
     }
 
     ariel::Graph& ariel::Graph::operator--(int a)
@@ -118,7 +114,10 @@
         {
             for(unsigned int j = 0;j<this->adjacencyMatrix.size();j++)
             {
-                this->adjacencyMatrix[i][j]--;
+                if(i!=j)
+                {
+                    this->adjacencyMatrix[i][j]--;
+                }
             }
         }
         return *this;
@@ -126,14 +125,7 @@
 
     ariel::Graph& ariel::Graph::operator--()
     {
-        for(unsigned int i = 0;i<this->adjacencyMatrix.size();i++)
-        {
-            for(unsigned int j = 0;j<this->adjacencyMatrix.size();j++)
-            {
-                --this->adjacencyMatrix[i][j];
-            }
-        }
-        return *this;
+        return (*this)--;
     }
 
     void ariel::Graph::operator+=(const ariel::Graph &other)
@@ -200,7 +192,10 @@
             {
                 for(unsigned int k = 0;k<this->adjacencyMatrix[0].size();k++)
                 {
-                    resultMat[i][j] += this->adjacencyMatrix[i][k] * otherMat[k][j];
+                    if(i!=j)
+                    {
+                        resultMat[i][j] += this->adjacencyMatrix[i][k] * otherMat[k][j];
+                    }
                 }
             }
         }
