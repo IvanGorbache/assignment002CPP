@@ -94,7 +94,7 @@
         {
             for(unsigned int j = 0;j<this->adjacencyMatrix.size();j++)
             {
-                if(i!=j)
+                if(adjacencyMatrix[i][j]!=0)
                 {
                     this->adjacencyMatrix[i][j]++;
                 }
@@ -114,7 +114,7 @@
         {
             for(unsigned int j = 0;j<this->adjacencyMatrix.size();j++)
             {
-                if(i!=j)
+                if(adjacencyMatrix[i][j]!=0)
                 {
                     this->adjacencyMatrix[i][j]--;
                 }
